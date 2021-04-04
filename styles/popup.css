@@ -1,0 +1,14 @@
+body {
+    width: 500px;
+    border-radius: 10px;
+}
+.form-group {
+    padding: 0 20px;
+}
+form .form-title {
+    margin-top: 15px;
+}
+
+.btn-convert {
+    padding-bottom: 20px;
+}

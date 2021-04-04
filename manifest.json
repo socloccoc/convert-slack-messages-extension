@@ -1,0 +1,22 @@
+{
+    "name": "Extension convert slack message",
+    "version": "1.0",
+    "description": "Uses OAuth to connect to Google's Spreadsheet API",
+    "icons": {
+      "128": "images/icon128.png"
+    },
+    "manifest_version": 2,
+    "browser_action": {
+      "default_title": "Extension convert slack message",
+      "default_popup": "popup.html"
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj9WLSuxHfNq7S1N95HTXEyvoYNmNMF4E/Nh/3lSp52TAAEOXXUz/M2ga4N7QS5lT5A/VwvURH/ke16lH+LBryHwriT2s6YleiCotSg70Hm/UZUMsKQiclhM+4cGKC6XR9uocGCN4E95PTjeq34p7f7xYi9EcFe9uFh5kJkTSBpCHvA+mrXlajkppfuLaQiYvhixo5fRVTohqPkj4xdwXGWlWrZDO3LO0FQlpR+dn3Frlku3tX7V+sI2RnUnn4R3sM7mOoWFOmmvXoXsX5Yaohy5E91gpgWwC1pcGHksD5tEqOlqVeQv/KwAAEjYJ+5+9sp/D5U6Kj5TzyHorxSYk0QIDAQAB",
+    "oauth2": {
+        "client_id": "838030992109-ashns9in5470hs4a95ci6r9jkqs2jess.apps.googleusercontent.com",
+        "scopes":["https://www.googleapis.com/auth/spreadsheets"]
+    },
+    "permissions": [
+        "identity"
+    ],
+    "content_security_policy": "script-src 'self' https://apis.google.com/; object-src 'self'"
+  }
