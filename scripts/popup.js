@@ -108,7 +108,6 @@ $(document).ready(function() {
         }
         });
         updateSheet(sheet_id, sheet_name, input);
-        setSuccess();
     }catch(error){
         setError(error.message)
     }
@@ -331,6 +330,7 @@ function onGAPILoad() {
           resource: body
       }).then((response) => {
           console.log(`${response.result.updates.updatedCells} cells appended.`)
+          setSuccess();
       }, function(error){
         setError(error.result.error.message)
       });
