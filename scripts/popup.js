@@ -9,98 +9,110 @@ $(document).ready(function() {
     if(getCookie('sheet_id')){
         $('input[name="sheet_id"]').val(getCookie('sheet_id'));
     }
-  $('#btn-convert').on('click', function(){
-    let sheet_id = $('input[name="sheet_id"]').val();
-    let server = $('select[name="server"]').val();
-    let month = (new Date()).getMonth() + 1;
-    let year = (new Date()).getFullYear();
-    let sheet_name = server+'!A2:D';
-    let body = $('textarea[name="body"]').val();
-    let server_rule = SERVERS[server].rule;
-    body = body.replaceAll("\n", "");
-    body = body.allReplace(server_rule);
-    let messages = body.split("\n");
-    let input = [];
-    messages.forEach(message => {
-      if(message){
-        if(message.length > 10000){
-          message = message.substring(0, 10000)
+    $('.alert').css('display', 'none');
+    $('#btn-convert').on('click', function(){
+    try{
+        let sheet_id = $('input[name="sheet_id"]').val();
+        if(sheet_id == ''){
+            setError('SheetId is required!');
+            return;
         }
-        let msg = message.allReplace(SERVERS[server].replace);
-        let time = msg.substring(0, 5);
-        
-        let date = '';
-        if(server === 'dam'){
-          if (message.includes('dam email')) {
-            let msgEx = message.split(month+'月');
-            if(msgEx[1]){
-                let msgEx2 = msgEx[1].split('日');
-                date = year+'-'+month+'-'+msgEx2[0];
-            }
-            msgEx = message.split('昨日の');
-
-            if(msgEx[1]){
-                date = subDay(1);
-            }
-
-            msgEx = message.split('今日の');
-            if(msgEx[1]){
-              date = subDay(0);
-            }
-          }
+        let server = $('select[name="server"]').val();
+        let month = (new Date()).getMonth() + 1;
+        let year = (new Date()).getFullYear();
+        let sheet_name = server+'!A2:D';
+        let body = $('textarea[name="body"]').val();
+        if(body == ''){
+            setError('Body is required!');
+            return;
         }
-
-        // dwjp
-        if(server === 'dwjp'){
-          if (message.includes('cloudwatch-logs-alert-bot')) {
-            let msgEx = message.split('/'+MONTHNAMES[month-1]+'/'+year);
-            if(msgEx[1]){
-                let day = msgEx[0].substring(-2, 2);
-                date = year+'-'+month+'-'+day;
+        let server_rule = SERVERS[server].rule;
+        body = body.replaceAll("\n", "");
+        body = body.allReplace(server_rule);
+        let messages = body.split("\n");
+        let input = [];
+        messages.forEach(message => {
+        if(message){
+            if(message.length > 10000){
+            message = message.substring(0, 10000)
             }
-          }
-        }
-
-        // saas
-        if(server === 'saas'){
-          if (message.includes('saas emailアプリ')) {
-              let msgEx = message.split(month+'月');
-
-              if(msgEx[1]){
-                  let msgEx2 = msgEx[1].split('日');
-                  date = year+'-'+month+'-'+msgEx2[0];
-              }
-
-              msgEx = message.split('昨日の');
-              if(msgEx[1]){
-                  date = subDay(1);
-              }
-
-              msgEx = message.split('今日の');
-              if(msgEx[1]){
-                  date = subDay(0)
-              }
-          }
-        }
-      
-        // sumo
-        if(server === 'sumo'){
-            if (message.includes('cloudwatch-logs-alert-bot')) {
-                let msgEx = message.split(year+'-'+month+'-');
+            let msg = message.allReplace(SERVERS[server].replace);
+            let time = msg.substring(0, 5);
+            
+            let date = '';
+            if(server === 'dam'){
+            if (message.includes('dam email')) {
+                let msgEx = message.split(month+'月');
                 if(msgEx[1]){
-                    day = msgEx[1].substring(0, 2);
+                    let msgEx2 = msgEx[1].split('日');
+                    date = year+'-'+month+'-'+msgEx2[0];
+                }
+                msgEx = message.split('昨日の');
+
+                if(msgEx[1]){
+                    date = subDay(1);
+                }
+
+                msgEx = message.split('今日の');
+                if(msgEx[1]){
+                date = subDay(0);
+                }
+            }
+            }
+
+            // dwjp
+            if(server === 'dwjp'){
+            if (message.includes('cloudwatch-logs-alert-bot')) {
+                let msgEx = message.split('/'+MONTHNAMES[month-1]+'/'+year);
+                if(msgEx[1]){
+                    let day = msgEx[0].substring(-2, 2);
                     date = year+'-'+month+'-'+day;
                 }
             }
+            }
+
+            // saas
+            if(server === 'saas'){
+            if (message.includes('saas emailアプリ')) {
+                let msgEx = message.split(month+'月');
+
+                if(msgEx[1]){
+                    let msgEx2 = msgEx[1].split('日');
+                    date = year+'-'+month+'-'+msgEx2[0];
+                }
+
+                msgEx = message.split('昨日の');
+                if(msgEx[1]){
+                    date = subDay(1);
+                }
+
+                msgEx = message.split('今日の');
+                if(msgEx[1]){
+                    date = subDay(0)
+                }
+            }
+            }
+        
+            // sumo
+            if(server === 'sumo'){
+                if (message.includes('cloudwatch-logs-alert-bot')) {
+                    let msgEx = message.split(year+'-'+month+'-');
+                    if(msgEx[1]){
+                        day = msgEx[1].substring(0, 2);
+                        date = year+'-'+month+'-'+day;
+                    }
+                }
+            }
+            let status = getStatus(message, server);
+            input.push([date, time, message, status]);
         }
-
-        let status = getStatus(message, server);
-        input.push([date, time, message, status]);
-
-      }
-    });
-    updateSheet(sheet_id, sheet_name, input);
-  })
+        });
+        updateSheet(sheet_id, sheet_name, input);
+        setSuccess();
+    }catch(error){
+        setError(error.message)
+    }
+  });
 });
 
 function getStatus(message, server){
@@ -299,7 +311,7 @@ function onGAPILoad() {
         });
       })
     }, function(error) {
-      console.log('error', error)
+        setError(error.result.error.message)
     });
   }
 
@@ -319,7 +331,11 @@ function onGAPILoad() {
           resource: body
       }).then((response) => {
           console.log(`${response.result.updates.updatedCells} cells appended.`)
+      }, function(error){
+        setError(error.result.error.message)
       });
+    }, function(error) {
+        setError(error.result.error.message)
     });
   }
 
@@ -361,3 +377,18 @@ function getCookie(name) {
 function eraseCookie(name) {   
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
+
+function setError(msg){
+    $('.alert').removeClass('alert-success');
+    $('.alert').addClass('alert-danger');
+    $('.alert').css('display', 'block');
+    $('.alert').html(msg);
+}
+
+function setSuccess(){
+    $('.alert').removeClass('alert-danger');
+    $('.alert').addClass('alert-success');
+    $('.alert').css('display', 'block');
+    $('.alert').html('Convert Success !');
+}
+

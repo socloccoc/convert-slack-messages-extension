@@ -13,29 +13,31 @@
  <body>
      <div class="col-12">
         <form>
-            <h2 class="text-center form-title">Convert Slack Messages</div>
-                <div class="form-group">
-                    <label>SheetId</label>
-                    <input class="form-control" name="sheet_id" placeholder="1jChGF01r8ZlBh9LUjc-J8f2Wihw9q9qDntB1jcSMo_0" />
-                </div>
-                <div class="form-group">
-                    <label>Server</label>
-                    <select name="server" class="custom-select">
-                        <option value="dam" selected>dam</option>
-                        <option value="dwjp">dwjp</option>
-                        <option value="baas">baas</option>
-                        <option value="saas">saas</option>
-                        <option value="sumo">sumo</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Body</label>
-                    <textarea class="form-control" rows="8" name="body"></textarea>
-                </div>
-                <div class="col-12 text-center btn-convert" id="btn-convert">
-                    <button type="button" id="btn-convert" class="btn btn-primary">Convert</button>
-                </div>
-          </form>
+            <h2 class="text-center form-title">Convert Slack Messages</h2>
+            <div class="text-center alert alert-danger" role="alert">
+            </div>
+            <div class="form-group">
+                <label>SheetId</label>
+                <input class="form-control" name="sheet_id" placeholder="1jChGF01r8ZlBh9LUjc-J8f2Wihw9q9qDntB1jcSMo_0" />
+            </div>
+            <div class="form-group">
+                <label>Server</label>
+                <select name="server" class="custom-select">
+                    <option value="dam" selected>dam</option>
+                    <option value="dwjp">dwjp</option>
+                    <option value="baas">baas</option>
+                    <option value="saas">saas</option>
+                    <option value="sumo">sumo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Body</label>
+                <textarea class="form-control" rows="8" name="body"></textarea>
+            </div>
+            <div class="col-12 text-center btn-convert" id="btn-convert">
+                <button type="button" id="btn-convert" class="btn btn-primary">Convert</button>
+            </div>
+        </form>
      </div>
  </body>
 </html>
