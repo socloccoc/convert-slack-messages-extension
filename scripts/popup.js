@@ -310,7 +310,7 @@ function onGAPILoad() {
         });
       })
     }, function(error) {
-        setError(error.result.error.message)
+        setError(getMsg(error.result.error.message))
     });
   }
 
@@ -332,10 +332,10 @@ function onGAPILoad() {
           console.log(`${response.result.updates.updatedCells} cells appended.`)
           setSuccess();
       }, function(error){
-        setError(error.result.error.message)
+        setError(getMsg(error.result.error.message))
       });
     }, function(error) {
-        setError(error.result.error.message)
+        setError(getMsg(error.result.error.message))
     });
   }
 
@@ -390,5 +390,15 @@ function setSuccess(){
     $('.alert').addClass('alert-success');
     $('.alert').css('display', 'block');
     $('.alert').html('Convert Success !');
+}
+
+function getMsg(msg){
+    if(msg === 'Requested entity was not found.'){
+        return 'SheetID not found.'
+    }
+    if(msg === 'The caller does not have permission'){
+        return 'Does not have permission to access this sheet.';
+    }
+    return msg;
 }
 
