@@ -13,7 +13,7 @@ $(document).ready(function() {
     $('button[id="btn-classify"]').on('click', function(){
         let sheet_id = $('input[name="sheet_id"]').val();
         let server = $('select[name="server"]').val();
-        let sheet_name = server+'!A2:D';
+        let sheet_name = server+'!A2:E';
         classifyMessage(sheet_id, sheet_name, server)
     });
     $('button[id="btn-convert"]').on('click', function(){
@@ -116,7 +116,8 @@ $(document).ready(function() {
                     }
                 }
                 let status = base.getStatus(message, server);
-                input.push([date, time, message, status]);
+                let type = base.getType(message, server);
+                input.push([date, time, message, status, type]);
             }
             });
             updateSheet(sheet_id, sheet_name, input);
@@ -222,7 +223,7 @@ function onGAPILoad() {
             var arrayA = [errorType.A];
             var arrayO = [errorType.O];
             for(var i = 1 ; i < days.length ; i++){
-                let valueN = '';let valueC = '';let valueA = '';
+                let valueN = '';let valueC = '';let valueA = ''; let valueO = '';
                 for(var j = 0 ; j < dataN.length ; j++){
                     let key = Object.keys(dataN[j])[0];
                     if(days[i] === key){
@@ -257,7 +258,7 @@ function onGAPILoad() {
             }
             var data = [days];
             data.push(arrayN, arrayA, arrayC, arrayO);
-            updateSheet(sheet_id, server+'!F2:AZ', data);
+            updateSheet(sheet_id, server+'!G2:AZ', data);
         }
 
         if(sheet_name.includes("dwjp")){
@@ -266,7 +267,6 @@ function onGAPILoad() {
             var dataC = [];
             var dataI = [];
             var dataO = [];
-            console.log(errors)
             for (var i = 0 ; i < errors.length ; i++){
                 // New Relicアプリ #time Incident #xxxxx opened Target #target
                 if ( (errors[i][2].includes("opened") && errors[i][2].includes("Target") && errors[i][2].includes("New Relic") )) {
@@ -300,7 +300,6 @@ function onGAPILoad() {
                 }
 
             }
-            console.log(dataN)
             var days = base.getDaysInMonth()
             var arrayN = [errorType.N];
             var arrayC = [errorType.C];
@@ -342,7 +341,7 @@ function onGAPILoad() {
             }
             var data = [days];
             data.push(arrayN, arrayI, arrayC, arrayO);
-            updateSheet(sheet_id, server+'!F2:AZ', data);
+            updateSheet(sheet_id, server+'!G2:AZ', data);
         }
 
         if(sheet_name.includes("baas")){
@@ -409,7 +408,7 @@ function onGAPILoad() {
             }
             var data = [days];
             data.push(arrayN, arrayC, arrayO);
-            updateSheet(sheet_id, server+'!F2:AZ', data);
+            updateSheet(sheet_id, server+'!G2:AZ', data);
         }
 
         if(sheet_name.includes("saas")){
@@ -492,7 +491,7 @@ function onGAPILoad() {
             }
             var data = [days];
             data.push(arrayN1, arrayN2, arrayN3, arrayO);
-            updateSheet(sheet_id, server+'!F2:AZ', data);
+            updateSheet(sheet_id, server+'!G2:AZ', data);
         }
 
         if(sheet_name.includes("sumo")){
@@ -559,7 +558,7 @@ function onGAPILoad() {
             }
             var data = [days];
             data.push(arrayN, arrayC, arrayO);
-            updateSheet(sheet_id, server+'!F2:AZ', data);
+            updateSheet(sheet_id, server+'!G2:AZ', data);
         }
     }, function(reason) {
         base.setCookie(base.getMsg(reason.result.error.message));

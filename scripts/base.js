@@ -267,3 +267,64 @@ base.getStatus = function (message, server){
         return "error";
     }
   }
+
+  base.getType = function (message, server){
+
+    if(server === 'dam'){
+        if ( (message.includes("opened") && message.includes("Target") && message.includes("New Relic") )) {
+            return "New Relicアプリ #time Incident #xxxxx opened Target #target";
+        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("Contains keywords to be alerted") )) {
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target"
+        } else if((message.includes("CloudWatch Alarm Notifierアプリ") && message.includes("@channel"))){
+            return "CloudWatch Alarm Notifierアプリ #time @channel ALARM #channe"
+        }else{
+            return "Other"
+        }
+    }
+  
+    if(server === 'dwjp'){
+        if ( (message.includes("opened") && message.includes("Target") && message.includes("New Relic") )) {
+            return "New Relicアプリ #time Incident #xxxxx opened Target #target";
+        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("Contains keywords to be alerted") )) {
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target"
+        } else if((message.includes("incoming-webhookアプリ") && message.includes("We detected anomalous behavior around the time this incident opened"))){
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target"
+        }else{
+            return "Other"
+        }
+    }
+  
+    if(server === 'baas'){
+        if ( (message.includes("opened") && message.includes("Target") && message.includes("New Relic") )) {
+            return "New Relicアプリ #time Incident #xxxxx opened Target #target"
+        } else if ((message.includes("CloudWatch Alarm Notifierアプリ") && message.includes("@channel"))) {
+            return "CloudWatch Alarm Notifierアプリ #time @channel ALARM #target"
+        } else{
+            return "Other"
+        }
+    }
+  
+    if(server === 'saas'){
+        if ( (message.includes("opened") && message.includes("ffewsn-dbs03") && message.includes("New Relic") )) {
+            return "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-dbs03"
+        } else if ((message.includes("opened") && message.includes("ffewsn-dhc01") && message.includes("New Relic") )) {
+           return "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-dhc01"
+        }else if ((message.includes("opened") && message.includes("ffewsn-web01") && message.includes("New Relic") )) {
+            return "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-web01"
+        } else{
+            return "Other"
+        }
+    }
+  
+    if(server === 'sumo'){
+        if ( (message.includes("opened") && message.includes("Target") && message.includes("New Relic") )) {
+            return "New Relicアプリ #time Incident #xxxxx opened Target #target"
+        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("Contains keywords to be alerted") )) {
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target"
+        } else{
+            return "Other"
+        }
+    }
+  
+    
+  }
