@@ -54,8 +54,8 @@ var SERVERS = {
         },
         "errorType" : {
             "N" : "New Relicアプリ #time Incident #xxxxx opened Target #target",
-            "C" : "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target",
-            "A" : "CloudWatch Alarm Notifierアプリ #time @channel ALARM #channel"
+            "C" : "CloudWatch Alarm Notifierアプリ #time @channel ALARM #target",
+            "O" : "Other"
         }
     },
     "saas" : {
@@ -72,9 +72,10 @@ var SERVERS = {
             "saas emailアプリ  " : ""
         },
         "errorType" : {
-            "N" : "New Relicアプリ #time Incident #xxxxx opened Target #target",
-            "C" : "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target",
-            "A" : "CloudWatch Alarm Notifierアプリ #time @channel ALARM #channel"
+            "N1" : "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-dbs03",
+            "N2" : "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-dhc01",
+            "N3" : "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-web01",
+            "O" : "Other"
         }
     },
     "sumo" : {
@@ -84,7 +85,7 @@ var SERVERS = {
             "New Relicアプリ  " : "\nNew Relicアプリ  ",
             "incoming-webhookアプリ  " : "\nincoming-webhookアプリ  "
          },
-         "rule" : {
+         "replace" : {
             "cloudwatch-logs-alert-botアプリ  " : "",
             "CloudWatch Alarm Notifierアプリ  " : "",
             "New Relicアプリ  " : "",
@@ -93,7 +94,7 @@ var SERVERS = {
          "errorType" : {
             "N" : "New Relicアプリ #time Incident #xxxxx opened Target #target",
             "C" : "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target",
-            "A" : "CloudWatch Alarm Notifierアプリ #time @channel ALARM #channel"
+            "O" : "Other"
         }
     }
     
