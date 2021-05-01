@@ -416,3 +416,115 @@ classify.saas = function (errors, errorType) {
     data.push(arrayN1, arrayN2, arrayN3, arrayO);
     return data;
 }
+
+classify.sumo = function (errors, errorType) {
+    var countN1 = 0; var countN2 = 0; var countN3 = 0; var countC1 = 0; var countC2 = 0; var countO = 0;
+    var dataN1 = [];
+    var dataN2 = [];
+    var dataN3 = [];
+    var dataC1 = [];
+    var dataC2 = [];
+    var dataO = [];
+    for (var i = 0; i < errors.length; i++) {
+        // New Relicアプリ #time Incident #xxxxx opened #sumo-dski-tool Conditiond ski-tool Encoding NowPolicySumo Dski Tool alert policyThresholdProcess Running > 0 for at least 10 minutes on 'sumo-dski-tool'
+        if ((errors[i][2].includes("opened") && errors[i][2].includes("sumo-dski-tool") && errors[i][2].includes("Running > 0 for at least 10 minutes") && errors[i][2].includes("New Relic"))) {
+            countN1 += 1;
+        } else if ((errors[i][2].includes("opened") && errors[i][2].includes("sumo-dski-tool") && errors[i][2].includes("Average One Minute > 3.5 for at least 10 minutes") && errors[i][2].includes("New Relic"))) {
+            // New Relicアプリ #time Incident #xxxxx opened #sumo-dski-tool Condition Processor load is too high Policy Sumo Dski Tool alert policyThresholdLoad Average One Minute > 3.5 for at least 10 minutes on 'sumo-dski-tool'
+            countN2 += 1;
+        } else if ((errors[i][2].includes("opened") && errors[i][2].includes("Sumo Urushi") && errors[i][2].includes("percentage > 15% at least once in 5 minutes") && errors[i][2].includes("New Relic"))) {
+            // New Relicアプリ #time Incident #xxxxx opened #Sumo Urushi Condition Error percentage (High)PolicySumo Urushi alert policyThresholdError percentage > 15% at least once in 5 minutes on 'Sumo Urushi'
+            countN3 += 1;
+        } else if ((errors[i][2].includes("cloudwatch-logs-alert-botアプリ") && errors[i][2].includes("/sumo/test/sumo-cli") && errors[i][2].includes("failed to import news") && errors[i][2].includes("Contains keywords to be alerted"))) {
+            // cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #/sumo/test/sumo-cli ... ERROR failed to import news
+            countC1 += 1;
+        } else if ((errors[i][2].includes("cloudwatch-logs-alert-botアプリ") && errors[i][2].includes("/sumo/production/data-replica-api-error") && errors[i][2].includes('PHP Warning') && errors[i][2].includes("Contains keywords to be alerted"))) {
+            // cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #/sumo/production/data-replica-api-error PHP Warning
+            countC2 += 1;
+        } else {
+            countO += 1;
+        }
+
+        if (i === errors.length - 1) {
+            dataN1.push({ [errors[i][0]]: countN1 })
+            dataN2.push({ [errors[i][0]]: countN2 })
+            dataN3.push({ [errors[i][0]]: countN3 })
+            dataC1.push({ [errors[i][0]]: countC1 })
+            dataC2.push({ [errors[i][0]]: countC2 })
+            dataO.push({ [errors[i][0]]: countO })
+        } else {
+            if (errors[i][0] != errors[i + 1][0]) {
+                dataN1.push({ [errors[i][0]]: countN1 })
+                dataN2.push({ [errors[i][0]]: countN2 })
+                dataN3.push({ [errors[i][0]]: countN3 })
+                dataC1.push({ [errors[i][0]]: countC1 })
+                dataC2.push({ [errors[i][0]]: countC2 })
+                dataO.push({ [errors[i][0]]: countO })
+                countN1 = 0; countN2 = 0; countN3 = 0;
+                countC1 = 0; countC2 = 0;
+                countO = 0;
+            }
+        }
+
+    }
+    var days = base.getDaysInMonth()
+    var arrayN1 = [errorType.N1];
+    var arrayN2 = [errorType.N2];
+    var arrayN3 = [errorType.N3];
+    var arrayC1 = [errorType.C1];
+    var arrayC2 = [errorType.C2];
+    var arrayO = [errorType.O];
+    for (var i = 1; i < days.length; i++) {
+        let valueN1 = ''; let valueN2 = ''; let valueN3 = ''; let valueC1 = ''; let valueC2 = ''; let valueO = '';
+        for (var j = 0; j < dataN1.length; j++) {
+            let key = Object.keys(dataN1[j])[0];
+            if (days[i] === key) {
+                valueN1 = Object.values(dataN1[j])[0];
+            }
+        }
+        arrayN1.push(valueN1)
+
+        for (var j = 0; j < dataN2.length; j++) {
+            let key = Object.keys(dataN2[j])[0];
+            if (days[i] === key) {
+                valueN2 = Object.values(dataN2[j])[0];
+            }
+        }
+        arrayN2.push(valueN2)
+
+        for (var j = 0; j < dataN3.length; j++) {
+            let key = Object.keys(dataN3[j])[0];
+            if (days[i] === key) {
+                valueN3 = Object.values(dataN3[j])[0];
+            }
+        }
+        arrayN3.push(valueN3)
+
+        for (var j = 0; j < dataC1.length; j++) {
+            let key = Object.keys(dataC1[j])[0];
+            if (days[i] === key) {
+                valueC1 = Object.values(dataC1[j])[0];
+            }
+        }
+        arrayC1.push(valueC1)
+
+        for (var j = 0; j < dataC2.length; j++) {
+            let key = Object.keys(dataC2[j])[0];
+            if (days[i] === key) {
+                valueC2 = Object.values(dataC2[j])[0];
+            }
+        }
+        arrayC2.push(valueC2)
+
+        for (var j = 0; j < dataO.length; j++) {
+            let key = Object.keys(dataO[j])[0];
+            if (days[i] === key) {
+                valueO = Object.values(dataO[j])[0];
+            }
+        }
+        arrayO.push(valueO)
+    }
+    var data = [days];
+    data.push(arrayN1, arrayN2, arrayN3, arrayC1, arrayC1, arrayO);
+    return data;
+}

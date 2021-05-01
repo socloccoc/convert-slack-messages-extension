@@ -1,28 +1,31 @@
 <html>
- <head>
-  <title></title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" href="styles/lib/bootstrap.min.css">
-  <link rel="stylesheet" href="styles/popup.css">
-  <script src="scripts/lib/jquery-3.5.1.slim.min.js"></script>
-  <script src="scripts/lib/bootstrap.bundle.min.js"></script>
-  <!-- <script src="scripts/lib/jquery.validate.min.js"></script> -->
-  <script src="constants/servers.js"></script>
-  <script src="scripts/base.js"></script>
-  <script src="scripts/classify.js"></script>
-  <script src="scripts/popup.js"></script>
-  <!-- <script src="scripts/validate.js"></script>    -->
-  <script src="https://apis.google.com/js/client.js?onload=onGAPILoad"></script>
- </head>
- <body>
-     <div class="col-12">
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="styles/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/popup.css">
+    <script src="scripts/lib/jquery-3.5.1.slim.min.js"></script>
+    <script src="scripts/lib/bootstrap.bundle.min.js"></script>
+    <!-- <script src="scripts/lib/jquery.validate.min.js"></script> -->
+    <script src="constants/servers.js"></script>
+    <script src="scripts/base.js"></script>
+    <script src="scripts/classify.js"></script>
+    <script src="scripts/popup.js"></script>
+    <!-- <script src="scripts/validate.js"></script>    -->
+    <script src="https://apis.google.com/js/client.js?onload=onGAPILoad"></script>
+</head>
+
+<body>
+    <div class="col-12">
         <form id="convert">
             <h2 class="text-center form-title">Convert Slack Messages</h2>
             <div class="text-center alert alert-danger" role="alert">
             </div>
             <div class="form-group">
                 <label>SheetId</label>
-                <input class="form-control input" name="sheet_id" placeholder="1jChGF01r8ZlBh9LUjc-J8f2Wihw9q9qDntB1jcSMo_0" />
+                <input class="form-control input" name="sheet_id"
+                    placeholder="1jChGF01r8ZlBh9LUjc-J8f2Wihw9q9qDntB1jcSMo_0" />
             </div>
             <div class="form-group">
                 <label>Server</label>
@@ -79,6 +82,7 @@
                 <button type="button" id="btn-classify" class="btn btn-primary">Classify</button>
             </div>
         </form>
-     </div>
- </body>
+    </div>
+</body>
+
 </html>
