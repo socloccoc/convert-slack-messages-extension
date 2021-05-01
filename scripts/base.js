@@ -305,10 +305,12 @@ base.getType = function (message, server) {
             return "New Relicアプリ #time Incident #xxxxx opened #ddex-db11 ConditionRDB CPU Utilization Average ddex-dbPolicyddex alert policyThresholdProvider . CPU Utilization . Average > 70 for at least 5 minutes on 'ddex-db11'"
         } else if ((message.includes("opened") && message.includes("prod-midio-am") && message.includes("ConditionProcessor load is too highPolicymidio") && message.includes("New Relic"))) {
             return "New Relicアプリ #time Incident #xxxxx opened #prod-midio-am ConditionProcessor load is too highPolicymidio alert policyThresholdLoad Average One Minute > 2 for at least 5 minutes on 'prod-midio-am'"
-        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("/dam/prod/dwjp-jacket-schedule-planner") && message.includes("Schedule Failed"))) {
-            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #/dam/prod/dwjp-jacket-schedule-planner #... ERROR Schedule Failed #..."
+        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("/dam/prod/dwjp-jacket-schedule-planner"))) {
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #/dam/prod/dwjp-jacket-schedule-planner #... ERROR Schedule Failed / ERROR o.h.engine.jdbc.. #..."
         } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("/dam/prod/dam-to-dwjp--scheduled-ffewsn-import-file") && message.includes("TaskFailed"))) {
             return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #/dam/prod/dam-to-dwjp--scheduled-ffewsn-import-file #... TaskFailed #... ExecutionFailed #..."
+        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("aws/lambda/prod--dam--dam-to-dwjp--reporter"))) {
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #/aws/lambda/prod--dam--dam-to-dwjp--reporter"
         } else if ((message.includes("CloudWatch Alarm Notifierアプリ") && message.includes("/ddex/production/ddex-batch-batch_importer_info/auto_delivery/missingAlarm"))) {
             return "CloudWatch Alarm Notifierアプリ #time @channel ALARM #/ddex/production/ddex-batch-batch_importer_info/auto_delivery/missingAlarm"
         } else {
