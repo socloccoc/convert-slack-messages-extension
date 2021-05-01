@@ -37,9 +37,12 @@ var SERVERS = {
             "New Relicアプリ  " : ""
         },
         "errorType" : {
-            "N" : "New Relicアプリ #time Incident #xxxxx opened Target #target",
-            "C" : "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target",
-            "I" : "incoming-webhookアプリ  #time We detected anomalous behavior around the time this incident opened #target",
+            "N1" : "New Relicアプリ #time Incident #xxxxx opened noren-prod-db02ConditionProcessor load is too high noren-prod-dbPolicynoren alert policyThresholdLoad Average One Minute > 2 for at least 5 minutes on 'noren-prod-db02'",
+            "N2" : "New Relicアプリ #time Incident #xxxxx opened callsp-prod-webConditionApdex (Low)Policycall alert policyThresholdApdex < 0.3 at least once in 5 minutes on 'callsp-prod-web' ( #x KB )",
+            "C1" : "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup /dwango-jp/production/callsp-manage-messages #... commands poll failed",
+            "C2" : "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup /dwango-jp/production/noren-manage-messages #... commands poll failed",
+            "C3" : "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup /dwango-jp/production/noren-manage-app ERROR no implicit conversion of nil into String #...",
+            "I" : "incoming-webhookアプリ  #time We detected anomalous behavior around the time this incident opened callsp-prod-web External services total call time was much different than normal (#x min before)External services total call time (#x kB)",
             "O" : "Other"
         }
     },
@@ -55,7 +58,8 @@ var SERVERS = {
             "New Relicアプリ  " : ""
         },
         "errorType" : {
-            "N" : "New Relicアプリ #time Incident #xxxxx opened Target #target",
+            "N1" : "New Relicアプリ #time Incident #xxxxx opened Target IPxxxx ConditionProcessor load is too high cds-prodPolicycds alert policyThresholdLoad Average One Minute > 4 for at least 5 minutes on IPxxxx",
+            "N2" : "New Relicアプリ #time Incident #xxxxx opened Target #playready-webxx ConditionMemory Free % WARNING playreadyPolicycds alert policyThresholdMemory Free % < 20 for at least 1 minutes on 'playready-webxx'",
             "C" : "CloudWatch Alarm Notifierアプリ #time @channel ALARM #target",
             "O" : "Other"
         }
@@ -74,9 +78,9 @@ var SERVERS = {
             "saas emailアプリ  " : ""
         },
         "errorType" : {
-            "N1" : "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-dbs03",
-            "N2" : "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-dhc01",
-            "N3" : "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-web01",
+            "N1" : "New Relicアプリ #time Incident #xxxxx opened #ffewsn-dbs03 (/data)Conditionffewsn ffewsn-db* Disk Used %Policyffewsn ffewsn-db alert policyThresholdDisk Used % > 85 for at least 5 minutes on 'ffewsn-dbs03 (/data)'",
+            "N2" : "New Relicアプリ #time Incident #xxxxx opened #ffewsn-dhc01 Conditionffewsn ffewsn-dhc01 Host not reportingPolicyffewsn alert policyThresholdHost Not Reporting at least once in 5 minutes on 'ffewsn-dhc01'",
+            "N3" : "New Relicアプリ #time Incident #xxxxx opened #ffewsn-web01 Conditionffewsn ffewsn-* Process : ntpdPolicyffewsn alert policyThresholdComponent/Processes/ntpd/Instance Count[processes] = 0 units for at least 5 minutes on 'ffewsn-web01'",
             "O" : "Other"
         }
     },

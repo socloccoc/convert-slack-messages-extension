@@ -303,53 +303,64 @@ base.getStatus = function (message, server){
   }
 
   base.getType = function (message, server){
-
     if(server === 'dam'){
-        if ( (message.includes("opened") && message.includes("Target") && message.includes("New Relic") )) {
-            return "New Relicアプリ #time Incident #xxxxx opened Target #target";
-        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("Contains keywords to be alerted") )) {
-            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target"
-        } else if((message.includes("CloudWatch Alarm Notifierアプリ") && message.includes("@channel"))){
-            return "CloudWatch Alarm Notifierアプリ #time @channel ALARM #channe"
-        }else{
+        if ((message.includes("opened") && message.includes("ddex-db11") && message.includes("ConditionRDB CPU Utilization Average") && message.includes("New Relic"))) {
+            return "New Relicアプリ #time Incident #xxxxx opened #ddex-db11 ConditionRDB CPU Utilization Average ddex-dbPolicyddex alert policyThresholdProvider . CPU Utilization . Average > 70 for at least 5 minutes on 'ddex-db11'"
+        } else if ((message.includes("opened") && message.includes("prod-midio-am") && message.includes("ConditionProcessor load is too highPolicymidio") && message.includes("New Relic"))) {
+            return "New Relicアプリ #time Incident #xxxxx opened #prod-midio-am ConditionProcessor load is too highPolicymidio alert policyThresholdLoad Average One Minute > 2 for at least 5 minutes on 'prod-midio-am'"
+        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("/dam/prod/dwjp-jacket-schedule-planner") && message.includes("Schedule Failed"))) {
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #/dam/prod/dwjp-jacket-schedule-planner #... ERROR Schedule Failed #..."
+        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("/dam/prod/dam-to-dwjp--scheduled-ffewsn-import-file") && message.includes("TaskFailed"))) {
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #/dam/prod/dam-to-dwjp--scheduled-ffewsn-import-file #... TaskFailed #... ExecutionFailed #..."
+        } else if ((message.includes("CloudWatch Alarm Notifierアプリ") && message.includes("/ddex/production/ddex-batch-batch_importer_info/auto_delivery/missingAlarm"))) {
+            return "CloudWatch Alarm Notifierアプリ #time @channel ALARM #/ddex/production/ddex-batch-batch_importer_info/auto_delivery/missingAlarm"
+        } else {
             return "Other"
         }
     }
   
     if(server === 'dwjp'){
-        if ( (message.includes("opened") && message.includes("Target") && message.includes("New Relic") )) {
-            return "New Relicアプリ #time Incident #xxxxx opened Target #target";
-        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("Log Monitoring") && message.includes("Contains keywords to be alerted") )) {
-            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target"
-        } else if((message.includes("incoming-webhookアプリ") && message.includes("We detected anomalous behavior around the time this incident opened"))){
-            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #target"
-        }else{
+        if ((message.includes("opened") && message.includes("noren-prod-db02") && message.includes("ConditionProcessor load is too high") && message.includes("New Relic"))) {
+            return "New Relicアプリ #time Incident #xxxxx opened noren-prod-db02ConditionProcessor load is too high noren-prod-dbPolicynoren alert policyThresholdLoad Average One Minute > 2 for at least 5 minutes on 'noren-prod-db02'";
+        } else if ((message.includes("opened") && message.includes("callsp-prod-web") && message.includes("ConditionApdex (Low)") && message.includes("New Relic"))) {
+            return "New Relicアプリ #time Incident #xxxxx opened callsp-prod-webConditionApdex (Low)Policycall alert policyThresholdApdex < 0.3 at least once in 5 minutes on 'callsp-prod-web' ( #x KB )"
+        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("commands poll failed") && message.includes("/dwango-jp/production/callsp-manage-messages") && message.includes("Contains keywords to be alerted"))) {
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup /dwango-jp/production/callsp-manage-messages #... commands poll failed"
+        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("commands poll failed") && message.includes("/dwango-jp/production/noren-manage-messages") && message.includes("Contains keywords to be alerted"))) {
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup /dwango-jp/production/noren-manage-messages #... commands poll failed"
+        } else if ((message.includes("cloudwatch-logs-alert-botアプリ") && message.includes("no implicit conversion of nil into String") && message.includes("/dwango-jp/production/noren-manage-app") && message.includes("Contains keywords to be alerted"))) {
+            return "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup /dwango-jp/production/noren-manage-app ERROR no implicit conversion of nil into String #..."
+        } else if ((message.includes("incoming-webhookアプリ") && message.includes("We detected anomalous behavior around the time this incident opened"))) {
+            return "incoming-webhookアプリ  #time We detected anomalous behavior around the time this incident opened callsp-prod-web External services total call time was much different than normal (#x min before)External services total call time (#x kB)"
+        } else {
             return "Other"
         }
     }
-  
+
     if(server === 'baas'){
-        if ( (message.includes("opened") && message.includes("Target") && message.includes("New Relic") )) {
-            return "New Relicアプリ #time Incident #xxxxx opened Target #target"
+        if ((message.includes("opened") && message.includes("ConditionProcessor load is too high cds-prod") && message.includes("New Relic"))) {
+           return "New Relicアプリ #time Incident #xxxxx opened Target IPxxxx ConditionProcessor load is too high cds-prodPolicycds alert policyThresholdLoad Average One Minute > 4 for at least 5 minutes on IPxxxx"
+        } else if ((message.includes("opened") && message.includes("playready-web") && message.includes("ConditionMemory Free %") && message.includes("New Relic"))) {
+            return "New Relicアプリ #time Incident #xxxxx opened Target #playready-webxx ConditionMemory Free % WARNING playreadyPolicycds alert policyThresholdMemory Free % < 20 for at least 1 minutes on 'playready-webxx'"
         } else if ((message.includes("CloudWatch Alarm Notifierアプリ") && message.includes("@channel"))) {
             return "CloudWatch Alarm Notifierアプリ #time @channel ALARM #target"
-        } else{
+        } else {
             return "Other"
         }
     }
-  
+
     if(server === 'saas'){
-        if ( (message.includes("opened") && message.includes("ffewsn-dbs03") && message.includes("New Relic") )) {
-            return "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-dbs03"
-        } else if ((message.includes("opened") && message.includes("ffewsn-dhc01") && message.includes("New Relic") )) {
-           return "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-dhc01"
-        }else if ((message.includes("opened") && message.includes("ffewsn-web01") && message.includes("New Relic") )) {
-            return "New Relicアプリ #time Incident #xxxxx opened #Target ffewsn-web01"
+        if ( (message.includes("opened") && message.includes("ffewsn-dbs03") && message.includes("ffewsn-db alert policyThresholdDisk Used % > 85") && message.includes("New Relic") )) {
+            return "New Relicアプリ #time Incident #xxxxx opened #ffewsn-dbs03 (/data)Conditionffewsn ffewsn-db* Disk Used %Policyffewsn ffewsn-db alert policyThresholdDisk Used % > 85 for at least 5 minutes on 'ffewsn-dbs03 (/data)'"
+        } else if ((message.includes("opened") && message.includes("ffewsn-dhc01") && message.includes("Not Reporting at least once in 5 minutes") && message.includes("New Relic") )) {
+           return "New Relicアプリ #time Incident #xxxxx opened #ffewsn-dhc01 Conditionffewsn ffewsn-dhc01 Host not reportingPolicyffewsn alert policyThresholdHost Not Reporting at least once in 5 minutes on 'ffewsn-dhc01'"
+        }else if ((message.includes("opened") && message.includes("ffewsn-web01") && message.includes("units for at least 5 minutes") && message.includes("New Relic") )) {
+            return "New Relicアプリ #time Incident #xxxxx opened #ffewsn-web01 Conditionffewsn ffewsn-* Process : ntpdPolicyffewsn alert policyThresholdComponent/Processes/ntpd/Instance Count[processes] = 0 units for at least 5 minutes on 'ffewsn-web01'"
         } else{
             return "Other"
         }
     }
-  
+
     if(server === 'sumo'){
         if ( (message.includes("opened") && message.includes("Target") && message.includes("New Relic") )) {
             return "New Relicアプリ #time Incident #xxxxx opened Target #target"
@@ -360,5 +371,4 @@ base.getStatus = function (message, server){
         }
     }
   
-    
   }
