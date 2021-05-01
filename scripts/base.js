@@ -243,7 +243,8 @@ base.getStatus = function (message, server){
   
         if (
             message.includes('dam/production/difference_reporter') ||
-            message.includes('インポーターの取込失敗監視')
+            message.includes('インポーターの取込失敗監視') ||
+            message.includes('drdy-test-app01') 
   
         ) {
             return 'ignore';
