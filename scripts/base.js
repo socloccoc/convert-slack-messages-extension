@@ -8,6 +8,39 @@ base.prototype = {
     }
 };
 
+base.cookieHandle = function() {
+    $('input[name="sheet_id"]').on('change', function(){
+        base.setCookie('sheet_id', $(this).val(), 9999);
+    })
+    if(base.getCookie('sheet_id')){
+        $('input[name="sheet_id"]').val(base.getCookie('sheet_id'));
+    }
+    $('select[name="server"]').on('change', function(){
+        base.setCookie('server', $(this).val(), 9999);
+    })
+    if(base.getCookie('server')){
+        $('select[name="server"]').val(base.getCookie('server'));
+    }
+    $('select[name="month"]').on('change', function(){
+        base.setCookie('month', $(this).val(), 9999);
+    })
+    if(base.getCookie('month')){
+        $('select[name="month"]').val(base.getCookie('month'));
+    }
+    $('select[name="year"]').on('change', function(){
+        base.setCookie('year', $(this).val(), 9999);
+    })
+    if(base.getCookie('year')){
+        $('select[name="year"]').val(base.getCookie('year'));
+    }
+    $('select[name="action"]').on('change', function(){
+        base.setCookie('action', $(this).val(), 9999);
+    })
+    if(base.getCookie('action')){
+        $('select[name="action"]').val(base.getCookie('action'));
+    }
+}
+
 base.setCookie = function(name,value,days) {
     var expires = "";
     if (days) {
@@ -65,8 +98,8 @@ base.setSuccess = function (){
 }
 
 base.getDaysInMonth = function() {
-    let month = (new Date()).getMonth() + 1;
-    let year = (new Date()).getFullYear();
+    let month = $('select[name="month"]').val();
+    let year = $('select[name="year"]').val();
     let days = new Date(year, month, 0).getDate();
     let ds = [''];
     for(var i = 1 ; i <= days ; i++){

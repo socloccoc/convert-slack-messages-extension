@@ -3,18 +3,13 @@ const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v
 const MONTHNAMES = ['Jan','Feb','Mar', 'Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 $(document).ready(function() {
-    $('input[name="sheet_id"]').on('change', function(){
-        base.setCookie('sheet_id', $(this).val(), 9999);
-    })
-    if(base.getCookie('sheet_id')){
-        $('input[name="sheet_id"]').val(base.getCookie('sheet_id'));
-    }
+    base.cookieHandle();
     $('.alert').css('display', 'none');
     $('button[id="btn-classify"]').on('click', function(){
         let sheet_id = $('input[name="sheet_id"]').val();
         let server = $('select[name="server"]').val();
         let sheet_name = server+'!A2:E';
-        classifyMessage(sheet_id, sheet_name, server)
+        classifyMessage(sheet_id, sheet_name, server, 0)
     });
     $('button[id="btn-convert"]').on('click', function(){
         try{
@@ -24,8 +19,9 @@ $(document).ready(function() {
                 return;
             }
             let server = $('select[name="server"]').val();
-            let month = (new Date()).getMonth() + 1;
-            let year = (new Date()).getFullYear();
+            let month = $('select[name="month"]').val();
+            let year = $('select[name="year"]').val();
+            let action = $('select[name="action"]').val();
             let sheet_name = server+'!A2:D';
             let body = $('textarea[name="body"]').val();
             if(body == ''){
@@ -47,30 +43,29 @@ $(document).ready(function() {
                 
                 let date = '';
                 if(server === 'dam'){
-                if (message.includes('dam email')) {
-                    let msgEx = message.split(month+'月');
-                    if(msgEx[1]){
-                        let msgEx2 = msgEx[1].split('日');
-                        date = year+'-'+month+'-'+msgEx2[0];
-                    }
-                    msgEx = message.split('昨日の');
+                    if (message.includes('dam email')) {
+                        let msgEx = message.split(month+'月');
+                        if(msgEx[1]){
+                            let msgEx2 = msgEx[1].split('日');
+                            date = year+'-'+month+'-'+msgEx2[0];
+                        }
+                        msgEx = message.split('昨日の');
 
-                    if(msgEx[1]){
-                        date = base.subDay(1);
-                    }
+                        if(msgEx[1]){
+                            date = base.subDay(1);
+                        }
 
-                    msgEx = message.split('今日の');
-                    if(msgEx[1]){
-                    date = base.subDay(0);
+                        msgEx = message.split('今日の');
+                        if(msgEx[1]){
+                            date = base.subDay(0);
+                        }
                     }
-                }
                 }
 
                 // dwjp
                 if(server === 'dwjp'){
                     if (message.includes('cloudwatch-logs-alert-bot')) {
                         let msgEx = message.split('/'+MONTHNAMES[month-1]+'/'+year);
-                        console.log(msgEx)
                         if(msgEx[1]){
                             let day = msgEx[0].substring(msgEx[0].length - 2, msgEx[0].length);
                             date = year+'-'+month+'-'+day;
@@ -120,7 +115,7 @@ $(document).ready(function() {
                 input.push([date, time, message, status, type]);
             }
             });
-            updateSheet(sheet_id, sheet_name, input);
+            updateSheet(sheet_id, sheet_name, input, action);
         }catch(error){
             base.setError(error.message)
         }
@@ -144,32 +139,43 @@ function onGAPILoad() {
     });
   }
 
-  function updateSheet(sheet_id, sheet_name, data) {
+  function updateSheet(sheet_id, sheet_name, data, action, is_convert = true) {
     const body = {values: data};
-     // Append values to the spreadsheet
-    gapi.client.sheets.spreadsheets.values.clear({
-      spreadsheetId: sheet_id,
-      range: sheet_name,
-    }).then((response) => {
-      console.log(`clear success`)
-      // Append values to the spreadsheet
-      gapi.client.sheets.spreadsheets.values.append({
-          spreadsheetId: sheet_id,
-          range: sheet_name,
-          valueInputOption: 'USER_ENTERED',
-          resource: body
-      }).then((response) => {
-          console.log(`${response.result.updates.updatedCells} cells appended.`)
-          base.setSuccess();
-      }, function(error){
-        base.setError(base.getMsg(error.result.error.message))
-      });
-    }, function(error) {
-        base.setError(base.getMsg(error.result.error.message))
-    });
+    // is classify or new convert
+     if(!is_convert || action == 1){
+        gapi.client.sheets.spreadsheets.values.clear({
+            spreadsheetId: sheet_id,
+            range: sheet_name,
+          }).then((response) => {
+            // Append values to the spreadsheet
+            gapi.client.sheets.spreadsheets.values.append({
+                spreadsheetId: sheet_id,
+                range: sheet_name,
+                valueInputOption: 'USER_ENTERED',
+                resource: body
+            }).then((response) => {
+                base.setSuccess();
+            }, function(error){
+              base.setError(base.getMsg(error.result.error.message))
+            });
+          }, function(error) {
+              base.setError(base.getMsg(error.result.error.message))
+          });
+     }else{
+        gapi.client.sheets.spreadsheets.values.append({
+            spreadsheetId: sheet_id,
+            range: sheet_name,
+            valueInputOption: 'USER_ENTERED',
+            resource: body
+        }).then((response) => {
+            base.setSuccess();
+        }, function(error){
+          base.setError(base.getMsg(error.result.error.message))
+        });
+     }
   }
 
-  function classifyMessage(sheet_id, sheet_name, server){
+  function classifyMessage(sheet_id, sheet_name, server, action){
     var request = gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: sheet_id,
         range: sheet_name,
@@ -185,7 +191,7 @@ function onGAPILoad() {
             var dataA = [];
             var dataO = [];
             for (var i = 0 ; i < errors.length ; i++){
-                // New Relicアプリ #time Incident #xxxxx opened Target #target
+                    // New Relicアプリ #time Incident #xxxxx opened Target #target
                 if ( (errors[i][2].includes("opened") && errors[i][2].includes("Target") && errors[i][2].includes("New Relic") )) {
                     countN += 1; 
                 } else if ((errors[i][2].includes("cloudwatch-logs-alert-botアプリ") && errors[i][2].includes("Log Monitoring") && errors[i][2].includes("Contains keywords to be alerted") )) {
@@ -258,7 +264,7 @@ function onGAPILoad() {
             }
             var data = [days];
             data.push(arrayN, arrayA, arrayC, arrayO);
-            updateSheet(sheet_id, server+'!G2:AZ', data);
+            updateSheet(sheet_id, server+'!G2:AZ', data, action, false);
         }
 
         if(sheet_name.includes("dwjp")){
@@ -341,7 +347,7 @@ function onGAPILoad() {
             }
             var data = [days];
             data.push(arrayN, arrayI, arrayC, arrayO);
-            updateSheet(sheet_id, server+'!G2:AZ', data);
+            updateSheet(sheet_id, server+'!G2:AZ', data, action, false);
         }
 
         if(sheet_name.includes("baas")){
@@ -408,7 +414,7 @@ function onGAPILoad() {
             }
             var data = [days];
             data.push(arrayN, arrayC, arrayO);
-            updateSheet(sheet_id, server+'!G2:AZ', data);
+            updateSheet(sheet_id, server+'!G2:AZ', data , action, false);
         }
 
         if(sheet_name.includes("saas")){
@@ -491,7 +497,7 @@ function onGAPILoad() {
             }
             var data = [days];
             data.push(arrayN1, arrayN2, arrayN3, arrayO);
-            updateSheet(sheet_id, server+'!G2:AZ', data);
+            updateSheet(sheet_id, server+'!G2:AZ', data, action, false);
         }
 
         if(sheet_name.includes("sumo")){
@@ -558,7 +564,7 @@ function onGAPILoad() {
             }
             var data = [days];
             data.push(arrayN, arrayC, arrayO);
-            updateSheet(sheet_id, server+'!G2:AZ', data);
+            updateSheet(sheet_id, server+'!G2:AZ', data, action, false);
         }
     }, function(reason) {
         base.setCookie(base.getMsg(reason.result.error.message));
