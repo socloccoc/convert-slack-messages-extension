@@ -29,7 +29,7 @@ $(document).ready(function () {
                 return;
             }
             let server_rule = SERVERS[server].rule;
-            body = body.replaceAll("\n", " ");
+            body = body.replaceAll("\n", "");
             body = body.allReplace(server_rule);
             let messages = body.split("\n");
             let input = [];
