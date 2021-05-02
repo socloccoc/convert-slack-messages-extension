@@ -134,7 +134,7 @@ base.getStatus = function (message, server) {
         }
 
         if (message.includes("closed") && message.includes("Target") && message.includes("New Relic")) {
-            return 'ignore';
+            return 'closed';
         }
 
         if (message.includes("/sumo/production/dski-tool-error") ||
@@ -161,7 +161,7 @@ base.getStatus = function (message, server) {
         }
 
         if (message.includes("closed") && message.includes("Target") && message.includes("New Relic")) {
-            return 'ignore';
+            return 'closed';
         }
 
         if (message.includes("3時間以上ジャケ写の同期が行われていません。") ||
@@ -192,7 +192,7 @@ base.getStatus = function (message, server) {
         }
 
         if (message.includes("closed") && message.includes("Target") && message.includes("New Relic")) {
-            return 'ignore';
+            return 'closed';
         }
 
         if (message.includes("Processor load is too high cds-prod") ||
@@ -213,26 +213,6 @@ base.getStatus = function (message, server) {
         return "error";
     }
 
-    if (server === 'jpstore') {
-        if (message.includes('emailアプリ')) {
-            return 'email';
-        }
-
-        if ((message.includes("opened") && message.includes("Target") && message.includes("New Relic"))) {
-            return 'error';
-        }
-
-        if ((message.includes("Google Cloud Monitoring"))) {
-            return 'error';
-        }
-
-        if (message.includes("closed") && message.includes("Target") && message.includes("New Relic")) {
-            return 'ignore';
-        }
-
-        return "error";
-    }
-
     if (server === 'dam') {
         if (message.includes('dam email')) {
             return 'email';
@@ -240,6 +220,7 @@ base.getStatus = function (message, server) {
 
         if (
             message.includes('dam/production/difference_reporter') ||
+            message.includes('aws/lambda/prod--dam--fargate-task-kicker') ||
             message.includes('インポーターの取込失敗監視') ||
             message.includes('drdy-test-app01')
 
@@ -252,7 +233,7 @@ base.getStatus = function (message, server) {
         }
 
         if (message.includes("closed") && message.includes("Target") && message.includes("New Relic")) {
-            return 'ignore';
+            return 'closed';
         }
 
         return "error";
@@ -280,7 +261,7 @@ base.getStatus = function (message, server) {
         }
 
         if (message.includes("closed") && message.includes("Target") && message.includes("New Relic")) {
-            return 'ignore';
+            return 'closed';
         }
 
         if (message.includes("/aws/lambda/prod-dwjp-ranking-check-cluster-step-status") && message.includes("cloudwatch-logs-alert-bot")) {
