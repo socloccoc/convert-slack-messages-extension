@@ -22,6 +22,11 @@ var SERVERS = {
             "A2": "CloudWatch Alarm Notifierアプリ #time @channel ALARM #/dam/test/etl-batch/error",
             "A3": "CloudWatch Alarm Notifierアプリ #time @channel ALARM #prod-ddexencoder-total-Instances",
             "O": "Other"
+        },
+        "ignoreType": {
+            "N1": "New Relicアプリ #time Incident #xxxxx opened #drdy-test-app01 Condition Memory Free % WARNING drdyPolicyddex encoder alert policy Threshold Memory Free % < 20 for at least 1 minutes on 'drdy-test-app01'",
+            "C1": "cloudwatch-logs-alert-botアプリ #time logGroup aws/lambda/prod--dam--fargate-task-kicker ERROR statusCode:500 failed to submit job :run_taskが失敗しました...:hanko_sumi:11 件の返信27日前スレッドを表示する",
+            "O": "Other"
         }
     },
     "dwjp": {
@@ -46,6 +51,11 @@ var SERVERS = {
             "C2": "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup /dwango-jp/production/noren-manage-messages #... commands poll failed",
             "C3": "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup /dwango-jp/production/noren-manage-app ERROR no implicit conversion of nil into String #...",
             "I": "incoming-webhookアプリ  #time We detected anomalous behavior around the time this incident opened callsp-prod-web External services total call time was much different than normal (#x min before)External services total call time (#x kB)",
+            "O": "Other"
+        },
+        "ignoreType": {
+            "C1": "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup /dwango-jp/production/noren-web-app #... ERROR #... Error: execution expired",
+            "C2": "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup /dwango-jp/production/cot-app #... ERROR #... Error: execution expired",
             "O": "Other"
         }
     },
@@ -111,7 +121,11 @@ var SERVERS = {
             "C2": "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #/sumo/production/data-replica-api-error PHP Warning",
             "I1": "incoming-webhookアプリ #time We detected anomalous behavior around the time this incident opened. Application running on the alerting host #Sumo Dski-toolWeb transactions total call time was much different than normal (12 min before) Web transactions total call time (7 kB)",
             "O": "Other"
-        }
+        },
+        "ignoreType": {
+            "C1": "cloudwatch-logs-alert-botアプリ #time Log Monitoring - Contains keywords to be alerted. ログ全文は上記リンクから logGroup #/sumo/production/urushi-app ... ERROR  logger:scalikejdbc.Statement Executor$$anon$1 method:error message:SQL ex....",
+            "O": "Other"
+        },
     }
 
 }

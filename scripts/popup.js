@@ -9,7 +9,8 @@ $(document).ready(function () {
         let sheet_id = $('input[name="sheet_id"]').val();
         let server = $('select[name="server"]').val();
         let sheet_name = server + '!A2:E';
-        classifyMessage(sheet_id, sheet_name, server, 0)
+        classifyErrorMessage(sheet_id, sheet_name, server, 0)
+        classifyIgnoreMessage(sheet_id, sheet_name, server, 0)
     });
     $('button[id="btn-convert"]').on('click', function () {
         try {
@@ -175,7 +176,7 @@ function updateSheet(sheet_id, sheet_name, data, action, is_convert = true) {
     }
 }
 
-function classifyMessage(sheet_id, sheet_name, server, action) {
+function classifyErrorMessage(sheet_id, sheet_name, server, action) {
     var request = gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: sheet_id,
         range: sheet_name,
@@ -186,25 +187,60 @@ function classifyMessage(sheet_id, sheet_name, server, action) {
         var errors = data.filter(msg => msg[3] === "error");
         var input = [];
         if (sheet_name.includes("dam")) {
-            input = classify.dam(errors, errorType);
+            input = classifyError.dam(errors, errorType);
         }
 
         if (sheet_name.includes("dwjp")) {
-            input = classify.dwjp(errors, errorType);
+            input = classifyError.dwjp(errors, errorType);
         }
 
         if (sheet_name.includes("baas")) {
-            input = classify.baas(errors, errorType);
+            input = classifyError.baas(errors, errorType);
         }
 
         if (sheet_name.includes("saas")) {
-            input = classify.saas(errors, errorType);
+            input = classifyError.saas(errors, errorType);
         }
 
         if (sheet_name.includes("sumo")) {
-            input = classify.sumo(errors, errorType);
+            input = classifyError.sumo(errors, errorType);
         }
         updateSheet(sheet_id, server + '!G2:AZ', input, action, false);
+    }, function (reason) {
+        base.setCookie(base.getMsg(reason.result.error.message));
+    })
+}
+
+function classifyIgnoreMessage(sheet_id, sheet_name, server, action) {
+    var request = gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: sheet_id,
+        range: sheet_name,
+    });
+    request.then((res) => {
+        var data = res.result.values;
+        var ignoreType = SERVERS[server].ignoreType;
+        var errors = data.filter(msg => msg[3] === "ignore");
+        var input = [];
+        if (sheet_name.includes("dam")) {
+            input = classifyIngore.dam(errors, ignoreType);
+        }
+
+        if (sheet_name.includes("dwjp")) {
+            input = classifyIngore.dwjp(errors, ignoreType);
+        }
+
+        if (sheet_name.includes("baas")) {
+            input = classifyIngore.baas(errors, ignoreType);
+        }
+
+        if (sheet_name.includes("saas")) {
+            input = classifyIngore.saas(errors, ignoreType);
+        }
+
+        if (sheet_name.includes("sumo")) {
+            input = classifyIngore.sumo(errors, ignoreType);
+        }
+        updateSheet(sheet_id, server + '!G20:AZ', input, action, false);
     }, function (reason) {
         base.setCookie(base.getMsg(reason.result.error.message));
     })

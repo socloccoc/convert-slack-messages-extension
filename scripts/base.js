@@ -142,7 +142,6 @@ base.getStatus = function (message, server) {
             message.includes("/sumo/production/data-replica-heartbeat/alarm") ||
             message.includes("/sumo/production/batch-heartbeat/alarm") ||
             message.includes("/sumo/production/dski-web-application-error") ||
-            message.includes("/sumo/production/urushi-app") ||
             message.includes("WordpressFeedColumnRepository.scala")
         ) {
             return 'ignore';
@@ -244,6 +243,10 @@ base.getStatus = function (message, server) {
             return 'email';
         }
 
+        if (message.includes("closed") && message.includes("Target") && message.includes("New Relic")) {
+            return 'closed';
+        }
+
         if (message.includes("dev-riff-music.dwango.jp")) {
             return 'ignore';
         }
@@ -264,19 +267,11 @@ base.getStatus = function (message, server) {
             return 'ignore';
         }
 
-        if (message.includes("closed") && message.includes("Target") && message.includes("New Relic")) {
-            return 'closed';
-        }
-
         if (message.includes("/aws/lambda/prod-dwjp-ranking-check-cluster-step-status") && message.includes("cloudwatch-logs-alert-bot")) {
             return 'ignore';
         }
 
         if (message.includes("/dwango-jp/production/cot-app") && message.includes("cloudwatch-logs-alert-bot")) {
-            return 'ignore';
-        }
-
-        if (message.includes("/job noren/production_batch") && message.includes("cloudwatch-logs-alert-bot")) {
             return 'ignore';
         }
 

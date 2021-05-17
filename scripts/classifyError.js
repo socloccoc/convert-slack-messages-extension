@@ -1,14 +1,14 @@
-classify = function (options) {
+classifyError = function (options) {
     return this.init(options);
 };
 
-classify.prototype = {
+classifyError.prototype = {
     init: function () {
         return this;
     }
 };
 
-classify.dam = function (errors, errorType) {
+classifyError.dam = function (errors, errorType) {
     var countN1 = 0; var countN2 = 0; var countC1 = 0; var countC2 = 0;  var countC3 = 0; var countA1 = 0; var countA2 = 0; var countA3 = 0; var countO = 0;
     var dataN1 = [];
     var dataN2 = [];
@@ -167,7 +167,7 @@ classify.dam = function (errors, errorType) {
     return data;
 };
 
-classify.dwjp = function (errors, errorType) {
+classifyError.dwjp = function (errors, errorType) {
     var countN1 = 0; var countN2 = 0; var countC1 = 0; var countC2 = 0; var countC3 = 0; var countI = 0; var countO = 0;
     var dataN1 = [];
     var dataN2 = [];
@@ -295,7 +295,7 @@ classify.dwjp = function (errors, errorType) {
     return data;
 }
 
-classify.baas = function (errors, errorType) {
+classifyError.baas = function (errors, errorType) {
     var countN1 = 0; var countN2 = 0; var countC = 0; var countO = 0;
     var dataN1 = [];
     var dataN2 = [];
@@ -378,7 +378,7 @@ classify.baas = function (errors, errorType) {
     return data;
 }
 
-classify.saas = function (errors, errorType) {
+classifyError.saas = function (errors, errorType) {
     var countN1 = 0; var countN2 = 0; var countN3 = 0; var countA1 = 0; var countC1 = 0; var countO = 0;
     var dataN1 = [];
     var dataN2 = [];
@@ -491,7 +491,7 @@ classify.saas = function (errors, errorType) {
     return data;
 }
 
-classify.sumo = function (errors, errorType) {
+classifyError.sumo = function (errors, errorType) {
     var countN1 = 0; var countN2 = 0; var countN3 = 0; var countN4 = 0; var countC1 = 0; var countC2 = 0; var countI1 = 0; var countO = 0;
     var dataN1 = [];
     var dataN2 = [];
